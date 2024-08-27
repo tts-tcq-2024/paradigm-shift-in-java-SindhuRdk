@@ -6,45 +6,41 @@ public class Main {
         return value >= min && value <= max;
     }
     
-    static String getStatus(String parameter, boolean isWithinRange, String lowMessage, String highMessage) {
-        if (!isWithinRange) {
-            return parameter + (value < min ? lowMessage : highMessage);
+    static String getStatus(String parameter, float value, float min, float max, String lowMessage, String highMessage) {
+        if (value < min) {
+            return parameter + lowMessage;
+        } else if (value > max) {
+            return parameter + highMessage;
         }
         return parameter + " is within range.";
     }
 
     static String checkTemperature(float temperature) {
-        return getStatus("Temperature", isValueWithinRange(temperature, 0, 45), " is too low!", " is too high!");
+        return getStatus("Temperature", temperature, 0, 45, " is too low!", " is too high!");
     }
     
     static String checkSOC(float soc) {
-        return getStatus("State of Charge", isValueWithinRange(soc, 20, 80), " is too low!", " is too high!");
+        return getStatus("State of Charge", soc, 20, 80, " is too low!", " is too high!");
     }
     
     static String checkChargeRate(float chargeRate) {
-        return getStatus("Charge Rate", isValueWithinRange(chargeRate, 0, 0.8f), "", " is too high!");
+        return getStatus("Charge Rate", chargeRate, 0, 0.8f, "", " is too high!");
     }
     
     static boolean batteryIsOk(float temperature, float soc, float chargeRate) {
         boolean isBatteryOk = true;
         
-        String tempStatus = checkTemperature(temperature);
-        String socStatus = checkSOC(soc);
-        String chargeRateStatus = checkChargeRate(chargeRate);
+        String[] statusMessages = {
+            checkTemperature(temperature),
+            checkSOC(soc),
+            checkChargeRate(chargeRate)
+        };
         
-        if (!tempStatus.equals("Temperature is within range.")) {
-            System.out.println(tempStatus);
-            isBatteryOk = false;
-        }
-        
-        if (!socStatus.equals("State of Charge is within range.")) {
-            System.out.println(socStatus);
-            isBatteryOk = false;
-        }
-        
-        if (!chargeRateStatus.equals("Charge Rate is within range.")) {
-            System.out.println(chargeRateStatus);
-            isBatteryOk = false;
+        for (String status : statusMessages) {
+            if (!status.contains("within range")) {
+                System.out.println(status);
+                isBatteryOk = false;
+            }
         }
         
         return isBatteryOk;

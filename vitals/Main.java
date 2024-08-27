@@ -2,29 +2,27 @@ package vitals;
 
 public class Main {
     
-    static String checkTemperature(float temperature) {
-        if (temperature < 0) {
-            return "Temperature is too low!";
-        } else if (temperature > 45) {
-            return "Temperature is too high!";
+    static boolean isValueWithinRange(float value, float min, float max) {
+        return value >= min && value <= max;
+    }
+    
+    static String getStatus(String parameter, boolean isWithinRange, String lowMessage, String highMessage) {
+        if (!isWithinRange) {
+            return parameter + (value < min ? lowMessage : highMessage);
         }
-        return "Temperature is within range.";
+        return parameter + " is within range.";
+    }
+
+    static String checkTemperature(float temperature) {
+        return getStatus("Temperature", isValueWithinRange(temperature, 0, 45), " is too low!", " is too high!");
     }
     
     static String checkSOC(float soc) {
-        if (soc < 20) {
-            return "State of Charge is too low!";
-        } else if (soc > 80) {
-            return "State of Charge is too high!";
-        }
-        return "State of Charge is within range.";
+        return getStatus("State of Charge", isValueWithinRange(soc, 20, 80), " is too low!", " is too high!");
     }
     
     static String checkChargeRate(float chargeRate) {
-        if (chargeRate > 0.8) {
-            return "Charge Rate is too high!";
-        }
-        return "Charge Rate is within range.";
+        return getStatus("Charge Rate", isValueWithinRange(chargeRate, 0, 0.8f), "", " is too high!");
     }
     
     static boolean batteryIsOk(float temperature, float soc, float chargeRate) {

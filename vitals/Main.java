@@ -14,6 +14,7 @@ public class Main {
         }
         return true;
     }
+    
 
     public static void main(String[] args) {
         assert(batteryIsOk(25, 70, 0.7f) == true);

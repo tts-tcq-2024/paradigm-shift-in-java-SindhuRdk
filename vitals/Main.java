@@ -11,26 +11,14 @@ public class Main {
         return parameter + " is within range.";
     }
 
-    static String checkTemperature(float temperature) {
-        return getStatus("Temperature", temperature, 0, 45, " is too low!", " is too high!");
-    }
-    
-    static String checkSOC(float soc) {
-        return getStatus("State of Charge", soc, 20, 80, " is too low!", " is too high!");
-    }
-    
-    static String checkChargeRate(float chargeRate) {
-        return getStatus("Charge Rate", chargeRate, 0, 0.8f, "", " is too high!");
-    }
-    
     static boolean batteryIsOk(float temperature, float soc, float chargeRate) {
         boolean isBatteryOk = true;
         
-        String[] statusMessages = {
-            checkTemperature(temperature),
-            checkSOC(soc),
-            checkChargeRate(chargeRate)
-        };
+        String tempStatus = getStatus("Temperature", temperature, 0, 45, " is too low!", " is too high!");
+        String socStatus = getStatus("State of Charge", soc, 20, 80, " is too low!", " is too high!");
+        String chargeRateStatus = getStatus("Charge Rate", chargeRate, 0, 0.8f, "", " is too high!");
+        
+        String[] statusMessages = {tempStatus, socStatus, chargeRateStatus};
         
         for (String status : statusMessages) {
             if (!status.contains("within range")) {

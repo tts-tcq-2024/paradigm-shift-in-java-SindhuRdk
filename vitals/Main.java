@@ -2,10 +2,6 @@ package vitals;
 
 public class Main {
     
-    static boolean isValueWithinRange(float value, float min, float max) {
-        return value >= min && value <= max;
-    }
-    
     static String getStatus(String parameter, float value, float min, float max, String lowMessage, String highMessage) {
         if (value < min) {
             return parameter + lowMessage;

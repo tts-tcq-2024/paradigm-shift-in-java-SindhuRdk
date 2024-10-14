@@ -59,3 +59,7 @@ Shorten the Semantic distance
 - Functional to express relation between input and output
 - Object oriented to encapsulate state with actions
 - Apect oriented to capture repeating aspects
+
+  ## Challenges faced
+  - Achieving complete test coverage while maintaining code quality can be time-consuming.
+  - Writing comprehensive unit tests for all edge cases is often difficult, especially when the application is large contains multiple interacting components.

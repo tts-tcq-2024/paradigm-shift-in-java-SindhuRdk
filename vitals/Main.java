@@ -1,58 +1,24 @@
+
 package vitals;
 
 public class Main {
-    
-    static boolean isValueWithinRange(float value, float min, float max) {
-        return value >= min && value <= max;
-    }
-    
-    static String getStatus(String parameter, float value, float min, float max, String lowMessage, String highMessage) {
-        if (value < min) {
-            return parameter + lowMessage;
-        } else if (value > max) {
-            return parameter + highMessage;
-        }
-        return parameter + " is within range.";
-    }
-
-    static String checkTemperature(float temperature) {
-        return getStatus("Temperature", temperature, 0, 45, " is too low!", " is too high!");
-    }
-    
-    static String checkSOC(float soc) {
-        return getStatus("State of Charge", soc, 20, 80, " is too low!", " is too high!");
-    }
-    
-    static String checkChargeRate(float chargeRate) {
-        return getStatus("Charge Rate", chargeRate, 0, 0.8f, "", " is too high!");
-    }
-    
-    static boolean batteryIsOk(float temperature, float soc, float chargeRate) {
-        boolean isBatteryOk = true;
-        
-        String[] statusMessages = {
-            checkTemperature(temperature),
-            checkSOC(soc),
-            checkChargeRate(chargeRate)
-        };
-        
-        for (String status : statusMessages) {
-            if (!status.contains("within range")) {
-                System.out.println(status);
-                isBatteryOk = false;
-            }
-        }
-        
-        return isBatteryOk;
-    }
-    
     public static void main(String[] args) {
-        assert(batteryIsOk(25, 70, 0.7f) == true);
-        assert(batteryIsOk(-1, 70, 0.7f) == false);
-        assert(batteryIsOk(50, 70, 0.7f) == false);
-        assert(batteryIsOk(25, 10, 0.7f) == false);
-        assert(batteryIsOk(25, 85, 0.7f) == false);
-        assert(batteryIsOk(25, 70, 0.9f) == false);
-        System.out.println("All tests passed.");
+        // Setting language to German for demonstration
+        LanguageSupport.setLanguage("DE");
+        assert (BatteryChecker.batteryIsOk(25, 70, 0.7f));
+        assert (!BatteryChecker.batteryIsOk(50, 85, 0.0f));
+        assert (!BatteryChecker.batteryIsOk(-10, 70, 0.5f));
+        assert (!BatteryChecker.batteryIsOk(25, 90, 0.5f));
+        assert (!BatteryChecker.batteryIsOk(25, 70, 1.0f));
+        assert (BatteryChecker.batteryIsOk(0, 20, 0.8f));
+
+        // Setting language back to English for further tests
+        LanguageSupport.setLanguage("EN");
+        assert (BatteryChecker.batteryIsOk(25, 70, 0.7f));
+        assert (!BatteryChecker.batteryIsOk(50, 85, 0.0f));
+        assert (!BatteryChecker.batteryIsOk(-10, 70, 0.5f));
+        assert (!BatteryChecker.batteryIsOk(25, 90, 0.5f));
+        assert (!BatteryChecker.batteryIsOk(25, 70, 1.0f));
+        assert (BatteryChecker.batteryIsOk(0, 20, 0.8f));
     }
 }
